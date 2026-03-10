@@ -3,14 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tes Tailwind - Monika Kitchen</title>
+    <title>Homepage - Monika Kitchen</title>
     @vite('resources/css/app.css')
 </head>
 <body class="bg-slate-50 antialiased">
-
     <nav class="flex justify-between items-center px-10 py-6 bg-white shadow-sm">
-        <div class="text-2xl font-black text-orange-600 tracking-tighter">
-            MONIKA<span class="text-slate-800">KITCHEN.</span>
+        <div 
+        class="text-2xl font-black text-orange-600 tracking-tighter">MONIKA<span class="text-slate-900">KITCHEN.</span>
         </div>
         <div class="space-x-8 font-medium text-slate-600">
             <a href="#" class="hover:text-orange-500 transition">Menu</a>
@@ -50,10 +49,12 @@
             </div>
 
             <div class="relative">
-                <div class="w-full h-[400px] bg-gradient-to-tr from-orange-400 to-orange-200 rounded-[40px] shadow-2xl rotate-3 flex items-center justify-center border-8 border-white">
-                    <p class="text-white font-bold text-xl -rotate-3 italic text-center px-10">
-                        [ Nanti di sini kita taruh foto Ayam Bakar Madu yang menggoda ]
-                    </p>
+                <div class="w-full h-[400px] rounded-[40px] shadow-2xl rotate-3 overflow-hidden border-8 border-white bg-slate-200">
+                    <img 
+                    src="{{ asset('img/mozzapizza.jpg') }}" 
+                    alt="Image Not Showing" 
+                    class="w-full h-full object-cover -rotate-3 scale-110"
+                    >
                 </div>
                 <div class="absolute -bottom-6 -left-6 bg-white p-6 rounded-3xl shadow-xl flex items-center gap-4">
                     <div class="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center text-white">
