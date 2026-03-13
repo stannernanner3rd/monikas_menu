@@ -129,7 +129,8 @@
                 <div class="col-span-2">Kategori</div>
                 <div class="col-span-2">Harga</div>
                 <div class="col-span-1">Promo</div>
-                <div class="col-span-2">Catering</div>
+                <div class="col-span-1">Catering</div>
+                <div class="col-span-1">Kuota</div>
                 <div class="col-span-2 text-right">Aksi</div>
             </div>
             <div id="menu-list"></div>
@@ -190,16 +191,21 @@
                 </select>
             </div>
 
-            <div class="grid grid-cols-2 gap-3">
+            <div class="grid grid-cols-3 gap-3">
                 <div>
                     <label class="block text-sm font-bold text-slate-700 mb-1.5">Rating (1-5)</label>
                     <input type="number" id="form-rating" min="1" max="5" step="0.1" placeholder="4.8" required
-                           class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:ring-2 focus:ring-orange-500 focus:border-transparent text-sm outline-none transition">
+                           class="w-full px-3 py-2.5 rounded-xl border border-slate-200 focus:ring-2 focus:ring-orange-500 focus:border-transparent text-sm outline-none transition">
                 </div>
                 <div>
-                    <label class="block text-sm font-bold text-slate-700 mb-1.5">Jumlah Terjual</label>
+                    <label class="block text-sm font-bold text-slate-700 mb-1.5">Terjual</label>
                     <input type="text" id="form-sold" placeholder="180+" required
-                           class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:ring-2 focus:ring-orange-500 focus:border-transparent text-sm outline-none transition">
+                           class="w-full px-3 py-2.5 rounded-xl border border-slate-200 focus:ring-2 focus:ring-orange-500 focus:border-transparent text-sm outline-none transition">
+                </div>
+                <div>
+                    <label class="block text-sm font-bold text-slate-700 mb-1.5">Batas Porsi</label>
+                    <input type="number" id="form-quota" placeholder="∞"
+                           class="w-full px-3 py-2.5 rounded-xl border border-slate-200 focus:ring-2 focus:ring-orange-500 focus:border-transparent text-sm outline-none transition" title="Kosongkan jika tanpa batas">
                 </div>
             </div>
 
@@ -298,14 +304,14 @@
 (function() {
     // ---- Menu data store ----
     let menuItems = [
-        { name: 'Pizza Margherita',    price: '65.000', cat: 'Pizza',     rating: '4.8', sold: '180+', img: 'https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?auto=format&fit=crop&w=400&q=80', special: true,  promo: true,  discount: 20.0, promoLabel: 'Promo Maret', catering: false, cater10: '', cater25: '', cater50: '', cater100: '' },
-        { name: 'Nasi Ayam Bakar',     price: '35.000', cat: 'Nasi Ayam', rating: '4.9', sold: '410+', img: 'https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?auto=format&fit=crop&w=400&q=80', special: false, promo: false, discount: 0,    promoLabel: '',             catering: true,  cater10: '30.000', cater25: '27.000', cater50: '24.000', cater100: '20.000' },
-        { name: 'Es Teh Manis',        price: '5.000',  cat: 'Minuman',   rating: '4.6', sold: '320+', img: 'https://images.unsplash.com/photo-1556679343-c7306c1976bc?auto=format&fit=crop&w=400&q=80', special: false, promo: false, discount: 0,    promoLabel: '',             catering: true,  cater10: '4.000', cater25: '3.500', cater50: '3.000', cater100: '2.500' },
-        { name: 'French Fries',        price: '15.000', cat: 'Snack',     rating: '4.7', sold: '210+', img: 'https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=400&q=80', special: false, promo: false, discount: 0,    promoLabel: '',             catering: false, cater10: '', cater25: '', cater50: '', cater100: '' },
-        { name: 'Spaghetti Carbonara', price: '45.000', cat: 'Pasta',     rating: '4.8', sold: '150+', img: 'https://images.unsplash.com/photo-1612450800052-759c5509b58e?auto=format&fit=crop&w=400&q=80', special: true,  promo: true,  discount: 15.0, promoLabel: 'Hemat 15%',    catering: false, cater10: '', cater25: '', cater50: '', cater100: '' },
-        { name: 'Pizza Meat Lovers',   price: '85.000', cat: 'Pizza',     rating: '4.9', sold: '290+', img: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=400&q=80', special: true,  promo: false, discount: 0,    promoLabel: '',             catering: true,  cater10: '75.000', cater25: '68.000', cater50: '60.000', cater100: '52.000' },
-        { name: 'Nasi Ayam Geprek',    price: '28.000', cat: 'Nasi Ayam', rating: '4.8', sold: '510+', img: 'https://images.unsplash.com/photo-1632778149955-e80f8ceca2e8?auto=format&fit=crop&w=400&q=80', special: false, promo: true,  discount: 10.0, promoLabel: 'Flash Sale',   catering: true,  cater10: '25.000', cater25: '22.000', cater50: '19.000', cater100: '16.000' },
-        { name: 'Ice Matcha Latte',    price: '25.000', cat: 'Minuman',   rating: '4.7', sold: '190+', img: 'https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=400&q=80', special: false, promo: false, discount: 0,    promoLabel: '',             catering: false, cater10: '', cater25: '', cater50: '', cater100: '' },
+        { name: 'Pizza Margherita',    price: '65.000', cat: 'Pizza',     rating: '4.8', sold: '180+', quota: 20, soldToday: 5,  img: 'https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?auto=format&fit=crop&w=400&q=80', special: true,  promo: true,  discount: 20.0, promoLabel: 'Promo Maret', catering: false, cater10: '', cater25: '', cater50: '', cater100: '' },
+        { name: 'Nasi Ayam Bakar',     price: '35.000', cat: 'Nasi Ayam', rating: '4.9', sold: '410+', quota: 50, soldToday: 48, img: 'https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?auto=format&fit=crop&w=400&q=80', special: false, promo: false, discount: 0,    promoLabel: '',             catering: true,  cater10: '30.000', cater25: '27.000', cater50: '24.000', cater100: '20.000' },
+        { name: 'Es Teh Manis',        price: '5.000',  cat: 'Minuman',   rating: '4.6', sold: '320+', quota: '', soldToday: 0,  img: 'https://images.unsplash.com/photo-1556679343-c7306c1976bc?auto=format&fit=crop&w=400&q=80', special: false, promo: false, discount: 0,    promoLabel: '',             catering: true,  cater10: '4.000', cater25: '3.500', cater50: '3.000', cater100: '2.500' },
+        { name: 'French Fries',        price: '15.000', cat: 'Snack',     rating: '4.7', sold: '210+', quota: '', soldToday: 0,  img: 'https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=400&q=80', special: false, promo: false, discount: 0,    promoLabel: '',             catering: false, cater10: '', cater25: '', cater50: '', cater100: '' },
+        { name: 'Spaghetti Carbonara', price: '45.000', cat: 'Pasta',     rating: '4.8', sold: '150+', quota: 15, soldToday: 13, img: 'https://images.unsplash.com/photo-1612450800052-759c5509b58e?auto=format&fit=crop&w=400&q=80', special: true,  promo: true,  discount: 15.0, promoLabel: 'Hemat 15%',    catering: false, cater10: '', cater25: '', cater50: '', cater100: '' },
+        { name: 'Pizza Meat Lovers',   price: '85.000', cat: 'Pizza',     rating: '4.9', sold: '290+', quota: 10, soldToday: 10, img: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=400&q=80', special: true,  promo: false, discount: 0,    promoLabel: '',             catering: true,  cater10: '75.000', cater25: '68.000', cater50: '60.000', cater100: '52.000' },
+        { name: 'Nasi Ayam Geprek',    price: '28.000', cat: 'Nasi Ayam', rating: '4.8', sold: '510+', quota: 50, soldToday: 20, img: 'https://images.unsplash.com/photo-1632778149955-e80f8ceca2e8?auto=format&fit=crop&w=400&q=80', special: false, promo: true,  discount: 10.0, promoLabel: 'Flash Sale',   catering: true,  cater10: '25.000', cater25: '22.000', cater50: '19.000', cater100: '16.000' },
+        { name: 'Ice Matcha Latte',    price: '25.000', cat: 'Minuman',   rating: '4.7', sold: '190+', quota: '', soldToday: 0,  img: 'https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=400&q=80', special: false, promo: false, discount: 0,    promoLabel: '',             catering: false, cater10: '', cater25: '', cater50: '', cater100: '' },
     ];
 
     const listEl = document.getElementById('menu-list');
@@ -341,6 +347,20 @@
         listEl.innerHTML = filtered.map(item => {
             const i = item._idx;
             const promoPrice = item.promo ? Math.round(parseInt(item.price.replace(/\./g,'')) * (1 - item.discount/100)).toLocaleString('id-ID') : '';
+
+            // Quota logic
+            let quotaHtml = '<span class="text-slate-300 text-xs">—</span>';
+            if(item.quota) {
+                const remaining = parseInt(item.quota) - parseInt(item.soldToday || 0);
+                if(remaining <= 0) {
+                    quotaHtml = `<span class="text-[10px] font-bold text-red-600 bg-red-50 px-2 py-0.5 rounded-full border border-red-200">Habis (0)</span>`;
+                } else if(remaining < 5) {
+                    quotaHtml = `<span class="text-[10px] font-bold text-red-700 bg-red-100 px-2 py-0.5 rounded-full border border-red-300">Sisa ${remaining}</span>`;
+                } else {
+                    quotaHtml = `<span class="text-[10px] font-bold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded-full">Sisa ${remaining}</span>`;
+                }
+            }
+
             return `
             <div class="md:grid md:grid-cols-12 md:gap-4 md:items-center px-4 md:px-6 py-3 border-b border-slate-50 hover:bg-slate-50/50 transition">
                 <div class="col-span-3 flex items-center gap-3 mb-2 md:mb-0">
@@ -351,6 +371,17 @@
                     <div class="min-w-0">
                         <p class="text-sm font-bold text-slate-800 truncate">${item.name}</p>
                         <p class="text-[11px] text-slate-400 md:hidden">${item.cat} · Rp ${item.price}</p>
+                        ${item.quota ? `
+                            <div class="md:hidden mt-1">
+                                ${parseInt(item.quota) - parseInt(item.soldToday||0) <= 0
+                                    ? '<span class="text-[9px] font-bold text-red-600 bg-red-50 px-1.5 py-0.5 rounded-full border border-red-200">Habis</span>'
+                                    : (parseInt(item.quota) - parseInt(item.soldToday||0) < 5
+                                        ? '<span class="text-[9px] font-bold text-red-700 bg-red-100 px-1.5 py-0.5 rounded-full border border-red-300">Sisa ' + (parseInt(item.quota)-parseInt(item.soldToday||0)) + '</span>'
+                                        : '<span class="text-[9px] font-bold text-emerald-700 bg-emerald-100 px-1.5 py-0.5 rounded-full">Sisa ' + (parseInt(item.quota)-parseInt(item.soldToday||0)) + '</span>'
+                                    )
+                                }
+                            </div>
+                        ` : ''}
                     </div>
                 </div>
                 <div class="col-span-2 hidden md:block">
@@ -367,10 +398,13 @@
                         ? `<span class="text-[10px] font-bold text-red-600 bg-red-50 px-2 py-0.5 rounded-full">${item.discount}%</span>`
                         : '<span class="text-slate-300 text-xs">—</span>'}
                 </div>
-                <div class="col-span-2 hidden md:block">
+                <div class="col-span-1 hidden md:block">
                     ${item.catering
-                        ? `<span class="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full">✓ Catering</span>`
+                        ? `<span class="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full" title="Tersedia Harga Grosir">✓</span>`
                         : '<span class="text-slate-300 text-xs">—</span>'}
+                </div>
+                <div class="col-span-1 hidden md:block">
+                    ${quotaHtml}
                 </div>
                 <div class="col-span-2 flex items-center justify-end gap-1">
                     ${item.promo ? '<span class="md:hidden text-[10px] font-bold text-red-600 bg-red-50 px-1.5 py-0.5 rounded-full mr-1">-' + item.discount + '%</span>' : ''}
@@ -429,6 +463,7 @@
             document.getElementById('form-cat').value = item.cat;
             document.getElementById('form-rating').value = item.rating;
             document.getElementById('form-sold').value = item.sold;
+            document.getElementById('form-quota').value = item.quota || '';
             document.getElementById('form-img').value = item.img;
             document.getElementById('form-special').checked = item.special;
             // Promo
@@ -472,6 +507,8 @@
             cat:        document.getElementById('form-cat').value,
             rating:     document.getElementById('form-rating').value,
             sold:       document.getElementById('form-sold').value.trim(),
+            quota:      document.getElementById('form-quota').value.trim(),
+            soldToday:  idx > -1 ? menuItems[idx].soldToday : 0,
             img:        document.getElementById('form-img').value.trim(),
             special:    document.getElementById('form-special').checked,
             promo:      document.getElementById('form-promo-active').checked,
