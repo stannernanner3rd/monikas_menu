@@ -32,3 +32,19 @@ Route::get('/orders', function () {
 Route::get('/about', function () {
     return view('main.about');
 });
+
+Route::get('/cart', function () {
+    return view('main.cart');
+});
+
+Route::get('/settings', function () {
+    return view('main.settings');
+});
+
+Route::get('/admin', function () {
+    return view('admin.dashboard');
+});
+
+Route::get('/admin/menu', function () {
+    return view('admin.menu-manage');
+});
