@@ -23,7 +23,7 @@
         .toggle-slider { position:absolute; inset:0; background:#cbd5e1; border-radius:999px; transition:0.3s; cursor:pointer; }
         .toggle-slider::before { content:''; position:absolute; height:18px; width:18px; left:3px; bottom:3px; background:white; border-radius:50%; transition:0.3s; }
         .toggle-switch input:checked + .toggle-slider { background:#ea580c; }
-        .toggle-switch input:checked + .toggle-slider::before { transform:translateX(20px); }
+        .toggle-switch input:checked + .toggle-slider:before { transform:translateX(20px); }
 
         .cat-filter { transition: all 0.2s; }
         .cat-filter.active { background:#ea580c !important; color:white !important; box-shadow:0 4px 12px rgba(234,88,12,0.3); }
@@ -31,56 +31,9 @@
 </head>
 <body class="bg-slate-50 antialiased">
 
-{{-- ===== ADMIN SIDEBAR ===== --}}
-<aside class="hidden md:flex flex-col fixed inset-y-0 left-0 w-64 bg-slate-900 z-50">
-    <div class="px-6 py-5 border-b border-slate-700">
-        <a href="{{ url('/admin') }}" class="block">
-            <span class="text-xl font-black text-white tracking-tighter leading-none">MONIKA<span class="text-orange-500">KITCHEN.</span></span>
-            <p class="text-[11px] text-slate-500 font-medium mt-1">Admin Panel</p>
-        </a>
-    </div>
-    <nav class="flex-1 px-3 py-4 space-y-1">
-        <p class="text-[10px] font-extrabold text-slate-500 uppercase tracking-widest px-3 mb-2">Menu</p>
-        <a href="{{ url('/admin') }}" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold text-slate-400 hover:bg-slate-800 hover:text-white transition">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/></svg>
-            Dashboard
-        </a>
-        <a href="{{ url('/admin/menu') }}" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-bold bg-orange-500/15 text-orange-400 transition">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
-            Kelola Menu
-        </a>
+{{-- Sidebar Admin — komponen reusable --}}
+<x-admin-sidebar active="menu" />
 
-        <p class="text-[10px] font-extrabold text-slate-500 uppercase tracking-widest px-3 mb-2 mt-5">Pengaturan</p>
-        <button onclick="toggleAdminDarkMode()" id="admin-dark-btn" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold text-slate-400 hover:bg-slate-800 hover:text-white transition w-full text-left">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
-            <span id="admin-dark-label">Mode Gelap</span>
-        </button>
-        <button onclick="toggleAdminLang()" id="admin-lang-btn" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold text-slate-400 hover:bg-slate-800 hover:text-white transition w-full text-left">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"/></svg>
-            <span id="admin-lang-label">🇮🇩 Indonesia</span>
-        </button>
-    </nav>
-    <div class="px-4 py-4 border-t border-slate-700">
-        <a href="{{ url('/main') }}" class="flex items-center gap-2 text-slate-400 hover:text-white text-sm font-semibold transition px-3 py-2">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 17l-5-5m0 0l5-5m-5 5h12"/></svg>
-            Kembali ke Toko
-        </a>
-    </div>
-</aside>
-
-{{-- MOBILE ADMIN HEADER --}}
-<header class="md:hidden bg-slate-900 px-4 pt-4 pb-3 sticky top-0 z-50">
-    <div class="flex items-center justify-between">
-        <a href="{{ url('/admin') }}" class="text-white text-lg font-black tracking-tighter">MONIKA<span class="text-orange-500">KITCHEN.</span></a>
-        <div class="flex items-center gap-2">
-            <a href="{{ url('/admin') }}" class="px-3 py-1.5 rounded-lg text-xs font-bold text-slate-400">Dashboard</a>
-            <a href="{{ url('/admin/menu') }}" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-orange-500 text-white">Menu</a>
-            <a href="{{ url('/main') }}" class="text-slate-400 ml-2">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 17l-5-5m0 0l5-5m-5 5h12"/></svg>
-            </a>
-        </div>
-    </div>
-</header>
 
 {{-- ===== MAIN CONTENT ===== --}}
 <div class="md:pl-64 min-h-screen">
@@ -361,7 +314,7 @@
                 }
             }
 
-            return `
+            return 
             <div class="md:grid md:grid-cols-12 md:gap-4 md:items-center px-4 md:px-6 py-3 border-b border-slate-50 hover:bg-slate-50/50 transition">
                 <div class="col-span-3 flex items-center gap-3 mb-2 md:mb-0">
                     <div class="relative flex-shrink-0">
@@ -416,7 +369,7 @@
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
                     </button>
                 </div>
-            </div>`;
+            </div>
         }).join('');
     }
 

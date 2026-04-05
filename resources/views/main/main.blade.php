@@ -104,36 +104,29 @@
                 </a>
             </div>
 
-            {{-- Carousel --}}
+            {{-- Carousel — DATA DARI DATABASE (admin toggle ⭐ di halaman Kelola Menu) --}}
+            @if($spesial->count() > 0)
             <div id="carousel" class="flex overflow-x-auto snap-x snap-mandatory gap-4 pb-3 no-scrollbar scroll-smooth">
+                @foreach($spesial as $item)
                 @php
-                    $specials = [
-                        ['name' => 'Beef & Pineapple Pizza', 'price' => '71.000', 'tag' => 'Pizza', 'rating' => '4.9', 'img' => 'https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=800&q=80'],
-                        ['name' => 'Spicy Honey Chicken', 'price' => '45.000', 'tag' => 'Ayam', 'rating' => '4.8', 'img' => 'https://images.unsplash.com/photo-1567620832903-9fc6debc209f?auto=format&fit=crop&w=800&q=80'],
-                        ['name' => 'Creamy Mushroom Pasta', 'price' => '55.000', 'tag' => 'Pasta', 'rating' => '4.7', 'img' => 'https://images.unsplash.com/photo-1556761223-4c4282c73f77?auto=format&fit=crop&w=800&q=80'],
-                        ['name' => 'Double Cheeseburger', 'price' => '60.000', 'tag' => 'Burger', 'rating' => '4.9', 'img' => 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=800&q=80'],
-                        ['name' => 'Grilled Salmon Steak', 'price' => '95.000', 'tag' => 'Seafood', 'rating' => '5.0', 'img' => 'https://images.unsplash.com/photo-1467003909585-2f8a7270028d?auto=format&fit=crop&w=800&q=80'],
-                    ];
+                    // Gambar: pakai dari storage jika ada, fallback ke placeholder
+                    $imgUrl = $item->gambar
+                        ? asset('storage/' . $item->gambar)
+                        : 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=800&q=80';
                 @endphp
-
-                @foreach($specials as $item)
-                <div class="carousel-item special-card min-w-[78%] md:min-w-[38%] lg:min-w-[28%] rounded-3xl overflow-hidden shadow-lg cursor-pointer snap-center relative flex-shrink-0" data-index="{{ $loop->index }}">
-                    <img src="{{ $item['img'] }}" alt="{{ $item['name'] }}" class="w-full h-56 md:h-64 object-cover block">
-                    {{-- Gradient overlay --}}
+                <div class="carousel-item special-card min-w-[78%] md:min-w-[38%] lg:min-w-[28%] rounded-3xl overflow-hidden shadow-lg cursor-pointer snap-center relative shrink-0" data-index="{{ $loop->index }}">
+                    <img src="{{ $imgUrl }}" alt="{{ $item->nama }}" class="w-full h-56 md:h-64 object-cover block">
                     <div class="card-overlay absolute inset-0"></div>
-                    {{-- Tag badge --}}
-                    <span class="absolute top-3 left-3 bg-white/20 backdrop-blur-sm text-white text-[10px] font-bold px-3 py-1 rounded-full border border-white/30">{{ $item['tag'] }}</span>
-                    {{-- Rating --}}
-                    <span class="absolute top-3 right-3 bg-black/40 backdrop-blur-sm text-yellow-400 text-[10px] font-bold px-2.5 py-1 rounded-full flex items-center gap-1">
-                        ⭐ {{ $item['rating'] }}
+                    {{-- Tag: nama kategori --}}
+                    <span class="absolute top-3 left-3 bg-white/20 backdrop-blur-sm text-white text-[10px] font-bold px-3 py-1 rounded-full border border-white/30">
+                        {{ $item->kategori ? $item->kategori->nama : 'Menu' }}
                     </span>
-                    {{-- Content --}}
                     <div class="absolute bottom-0 left-0 right-0 p-4 flex justify-between items-end">
                         <div>
-                            <h3 class="text-white font-bold text-base leading-snug drop-shadow">{{ $item['name'] }}</h3>
-                            <p class="text-orange-300 font-black text-xl mt-0.5">Rp {{ $item['price'] }}</p>
+                            <h3 class="text-white font-bold text-base leading-snug drop-shadow">{{ $item->nama }}</h3>
+                            <p class="text-orange-300 font-black text-xl mt-0.5">Rp {{ number_format($item->harga, 0, ',', '.') }}</p>
                         </div>
-                        <button id="add-special-{{ $loop->index }}" class="bg-orange-500 hover:bg-orange-400 p-3 rounded-full text-white shadow-lg transition-all duration-200 hover:scale-110 flex-shrink-0">
+                        <button id="add-special-{{ $loop->index }}" class="bg-orange-500 hover:bg-orange-400 p-3 rounded-full text-white shadow-lg transition-all duration-200 hover:scale-110 shrink-0">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/></svg>
                         </button>
                     </div>
@@ -143,10 +136,18 @@
 
             {{-- Indicators --}}
             <div class="flex justify-center gap-2 mt-3">
-                @foreach($specials as $index => $item)
-                <div class="indicator-dot h-1.5 rounded-full transition-all duration-300 cursor-pointer {{ $index === 0 ? 'w-6 bg-orange-500' : 'w-1.5 bg-slate-300' }}" data-index="{{ $index }}"></div>
+                @foreach($spesial as $index => $item)
+                <div class="indicator-dot h-1.5 rounded-full transition-all duration-300 cursor-pointer {{ $loop->first ? 'w-6 bg-orange-500' : 'w-1.5 bg-slate-300' }}" data-index="{{ $loop->index }}"></div>
                 @endforeach
             </div>
+            @else
+            {{-- Jika admin belum menandai menu spesial --}}
+            <div class="bg-orange-50 rounded-2xl p-8 text-center">
+                <p class="text-3xl mb-2">⭐</p>
+                <p class="text-slate-500 font-semibold text-sm">Belum ada menu spesial minggu ini.</p>
+                <p class="text-slate-400 text-xs mt-1">Admin bisa menandai menu lewat panel admin.</p>
+            </div>
+            @endif
         </section>
 
         {{-- ===== MENU TERLARIS ===== --}}
@@ -209,26 +210,31 @@
                 </a>
             </div>
 
+            {{-- KATEGORI — DATA DARI DATABASE --}}
             @php
-                $categories = [
-                    ['name' => 'Makanan', 'emoji' => '🍽️', 'count' => '24 Item', 'img' => 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=400&q=80', 'color' => 'from-orange-400 to-red-500'],
-                    ['name' => 'Minuman', 'emoji' => '🥤', 'count' => '18 Item', 'img' => 'https://images.unsplash.com/photo-1544145945-f90425340c7e?auto=format&fit=crop&w=400&q=80', 'color' => 'from-blue-400 to-cyan-500'],
-                    ['name' => 'Snack',   'emoji' => '🍟', 'count' => '12 Item', 'img' => 'https://images.unsplash.com/photo-1562967915-6ba607ff7d05?auto=format&fit=crop&w=400&q=80', 'color' => 'from-yellow-400 to-orange-400'],
-                    ['name' => 'Dessert', 'emoji' => '🍰', 'count' => '10 Item', 'img' => 'https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?auto=format&fit=crop&w=400&q=80', 'color' => 'from-pink-400 to-rose-500'],
+                // Warna gradient untuk setiap kategori (berputar)
+                $gradients = [
+                    'from-orange-400 to-red-500',
+                    'from-blue-400 to-cyan-500',
+                    'from-yellow-400 to-orange-400',
+                    'from-pink-400 to-rose-500',
+                    'from-emerald-400 to-teal-500',
+                    'from-violet-400 to-purple-500',
                 ];
             @endphp
 
             <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
-                @foreach($categories as $cat)
+                @foreach($kategoriDB as $i => $cat)
                 <a href="{{ url('/menu') }}" class="cat-card bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-100 cursor-pointer group block">
                     <div class="relative overflow-hidden h-32">
-                        <img src="{{ $cat['img'] }}" alt="{{ $cat['name'] }}" class="cat-img w-full h-full object-cover">
-                        <div class="absolute inset-0 bg-gradient-to-t {{ $cat['color'] }} opacity-50 group-hover:opacity-65 transition-opacity duration-300"></div>
-                        <span class="absolute top-2 left-2 text-xl">{{ $cat['emoji'] }}</span>
+                        <div class="w-full h-full bg-gradient-to-br {{ $gradients[$i % count($gradients)] }} flex items-center justify-center">
+                            <span class="text-4xl">🍽️</span>
+                        </div>
+                        <div class="absolute inset-0 bg-gradient-to-t {{ $gradients[$i % count($gradients)] }} opacity-40 group-hover:opacity-60 transition-opacity duration-300"></div>
                     </div>
                     <div class="p-3">
-                        <h3 class="font-bold text-slate-800 group-hover:text-orange-600 transition text-sm">{{ $cat['name'] }}</h3>
-                        <p class="text-slate-400 text-[11px] font-medium mt-0.5">{{ $cat['count'] }}</p>
+                        <h3 class="font-bold text-slate-800 group-hover:text-orange-600 transition text-sm">{{ $cat->nama }}</h3>
+                        <p class="text-slate-400 text-[11px] font-medium mt-0.5">{{ $cat->menu_count }} Item</p>
                     </div>
                 </a>
                 @endforeach
