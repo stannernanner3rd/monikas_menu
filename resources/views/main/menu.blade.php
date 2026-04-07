@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Menu - Monika's Kitchen</title>
+<<<<<<< HEAD
     <meta name="description" content="Lihat semua menu lezat Monika's Kitchen — pesan langsung dari database kami.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -21,6 +22,43 @@
         .menu-card.hidden-item { display: none; }
         @keyframes fadeUp { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:translateY(0); } }
         .fade-up { animation: fadeUp 0.55s ease both; }
+=======
+    <meta name="description" content="Lihat semua menu lezat Monika's Kitchen — makanan, minuman, snack, dan pasta pilihan terbaik.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    @vite('resources/css/app.css')
+    <style>
+        * { font-family: 'Plus Jakarta Sans', sans-serif; }
+
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* Menu card */
+        .menu-card { transition: transform 0.25s ease, box-shadow 0.25s ease, opacity 0.3s ease; }
+        .menu-card:hover { transform: translateY(-4px); box-shadow: 0 16px 32px rgba(249,115,22,0.15); }
+
+        /* Add button */
+        .add-btn { transition: background 0.2s, transform 0.2s; }
+        .add-btn:hover { transform: scale(1.12); }
+
+        /* Category pill active */
+        .cat-pill { transition: all 0.2s ease; }
+        .cat-pill.active { background: #ea580c; color: #fff; box-shadow: 0 4px 14px rgba(234,88,12,0.35); }
+
+        /* Filter hidden */
+        .menu-card.hidden-item { display: none; }
+
+        /* Section fade-in */
+        @keyframes fadeUp { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:translateY(0); } }
+        .fade-up { animation: fadeUp 0.55s ease both; }
+
+        /* Badge pulse */
+        @keyframes pulse-badge { 0%,100% { transform:scale(1); } 50% { transform:scale(1.18); } }
+        .badge-pulse { animation: pulse-badge 2s infinite; }
+
+        /* Cart count scale */
+>>>>>>> 74acaec9651d928d6d75935fedd887b7404207ff
         .scale-pop { animation: scalePop 0.2s ease; }
         @keyframes scalePop { 0% { transform:scale(1); } 50% { transform:scale(1.4); } 100% { transform:scale(1); } }
     </style>

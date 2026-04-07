@@ -1,8 +1,11 @@
 <?php
 
+<<<<<<< HEAD
 use App\Models\Menu;
 use App\Models\Pesanan;
 use App\Models\DetailPesanan;
+=======
+>>>>>>> 74acaec9651d928d6d75935fedd887b7404207ff
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,6 +24,7 @@ Route::get('/', function () {
 });
 
 Route::get('/menu', function () {
+<<<<<<< HEAD
     // Ambil menu AKTIF saja, beserta kategorinya
     $menuDB = Menu::with('kategori')->where('is_aktif', 1)->get();
     $kategoriDB = \App\Models\Kategori::withCount(['menu' => function($q) {
@@ -52,6 +56,13 @@ Route::get('/main', function () {
     $kategoriDB = \App\Models\Kategori::withCount(['menu' => fn($q) => $q->where('is_aktif', 1)])->get();
 
     return view('main.main', compact('spesial', 'kategoriDB'));
+=======
+    return view('main.menu');
+});
+
+Route::get('/main', function () {
+    return view('main.main');
+>>>>>>> 74acaec9651d928d6d75935fedd887b7404207ff
 });
 
 Route::get('/orders', function () {
@@ -77,6 +88,7 @@ Route::get('/admin', function () {
 Route::get('/admin/menu', function () {
     return view('admin.menu-manage');
 });
+<<<<<<< HEAD
 
 Route::get('/admin/menu-test', function () {
     // Ambil semua menu (termasuk nonaktif) + kategori + harga catering
@@ -395,3 +407,5 @@ Route::get('/api/harga-catering/{id}', function ($id) {
     $tiers = DB::table('harga_catering')->where('id_menu', $id)->orderBy('min_porsi')->get();
     return response()->json($tiers);
 });
+=======
+>>>>>>> 74acaec9651d928d6d75935fedd887b7404207ff
