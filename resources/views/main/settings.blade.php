@@ -19,9 +19,9 @@
         .toggle-sw { position:relative; width:48px; height:26px; display:inline-block; }
         .toggle-sw input { opacity:0; width:0; height:0; }
         .toggle-sl { position:absolute; inset:0; background:#cbd5e1; border-radius:999px; transition:0.3s; cursor:pointer; }
-        .toggle-sl::before { content:''; position:absolute; height:20px; width:20px; left:3px; bottom:3px; background:white; border-radius:50%; transition:0.3s; box-shadow:0 1px 3px rgba(0,0,0,0.15); }
+        .toggle-sl:before { content:''; position:absolute; height:20px; width:20px; left:3px; bottom:3px; background:white; border-radius:50%; transition:0.3s; box-shadow:0 1px 3px rgba(0,0,0,0.15); }
         .toggle-sw input:checked + .toggle-sl { background:#ea580c; }
-        .toggle-sw input:checked + .toggle-sl::before { transform:translateX(22px); }
+        .toggle-sw input:checked + .toggle-sl:before { transform:translateX(22px); }
 
         /* Lang button */
         .lang-btn { transition:all 0.2s; }
@@ -92,20 +92,37 @@
             </div>
         </section>
 
-        {{-- ===== ACCOUNT (placeholder) ===== --}}
+        {{-- ===== ACCOUNT ===== --}}
         <section class="mt-5 fade-up-1">
             <p class="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest mb-3" data-i18n="account_section">Akun</p>
 
             <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-5">
+                @if(session('is_admin'))
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-orange-100 flex items-center justify-center text-orange-600">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+                    </div>
+                    <div class="flex-1">
+                        <p class="text-sm font-bold text-slate-800">{{ session('admin_name', 'Admin') }}</p>
+                        <p class="text-xs text-slate-400">Admin · Sudah Login</p>
+                    </div>
+                    <form method="POST" action="{{ url('/logout') }}">
+                        @csrf
+                        <button class="text-xs font-bold text-red-500 hover:text-red-700 transition">Logout</button>
+                    </form>
+                </div>
+                @else
                 <div class="flex items-center gap-3">
                     <div class="w-10 h-10 rounded-xl bg-slate-100 flex items-center justify-center text-slate-400">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
                     </div>
                     <div class="flex-1">
-                        <p class="text-sm font-bold text-slate-400" data-i18n="account_coming">Segera Hadir</p>
-                        <p class="text-xs text-slate-300" data-i18n="account_coming_desc">Login, profil, dan pengaturan akun akan tersedia di versi mendatang.</p>
+                        <p class="text-sm font-bold text-slate-600" data-i18n="account_coming">Admin Login</p>
+                        <p class="text-xs text-slate-400" data-i18n="account_coming_desc">Masuk sebagai admin untuk mengelola toko.</p>
                     </div>
+                    <a href="{{ url('/login') }}" class="text-xs font-bold text-orange-500 hover:text-orange-700 transition">Login →</a>
                 </div>
+                @endif
             </div>
         </section>
 
@@ -116,16 +133,18 @@
             <div class="bg-white rounded-2xl shadow-sm border border-slate-100 divide-y divide-slate-50">
                 <div class="flex items-center justify-between px-5 py-3.5">
                     <span class="text-sm font-semibold text-slate-600" data-i18n="version">Versi</span>
-                    <span class="text-sm font-bold text-slate-800">1.0.0</span>
+                    <span class="text-sm font-bold text-slate-800">1.1.0</span>
                 </div>
                 <a href="{{ url('/about') }}" class="flex items-center justify-between px-5 py-3.5 hover:bg-slate-50 transition">
                     <span class="text-sm font-semibold text-slate-600" data-i18n="about_us">Tentang Kami</span>
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
                 </a>
+                @if(session('is_admin'))
                 <a href="{{ url('/admin') }}" class="flex items-center justify-between px-5 py-3.5 hover:bg-slate-50 transition">
-                    <span class="text-sm font-semibold text-slate-600" data-i18n="admin_panel">Admin Panel</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                    <span class="text-sm font-semibold text-orange-600" data-i18n="admin_panel">🔐 Admin Panel</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-orange-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
                 </a>
+                @endif
             </div>
         </section>
 

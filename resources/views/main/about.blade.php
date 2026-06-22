@@ -76,7 +76,7 @@
                             ['num' => '2+',   'label' => 'Tahun Beroperasi', 'icon' => '📅'],
                             ['num' => '2rb+', 'label' => 'Pelanggan Puas',  'icon' => '😊'],
                             ['num' => '50+',  'label' => 'Menu Pilihan',     'icon' => '🍴'],
-                            ['num' => '4.9',  'label' => 'Rating Rata-rata', 'icon' => '⭐'],
+                            ['num' => '100%', 'label' => 'Halal & Higienis', 'icon' => '✅'],
                         ];
                     @endphp
                     @foreach($stats as $s)

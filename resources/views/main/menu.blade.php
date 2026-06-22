@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Menu - Monika's Kitchen</title>
-<<<<<<< HEAD
     <meta name="description" content="Lihat semua menu lezat Monika's Kitchen — pesan langsung dari database kami.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -19,46 +18,8 @@
         .menu-card:hover { transform: translateY(-4px); box-shadow: 0 16px 32px rgba(249,115,22,0.15); }
         .add-btn { transition: background 0.2s, transform 0.2s; }
         .add-btn:hover { transform: scale(1.12); }
-        .menu-card.hidden-item { display: none; }
         @keyframes fadeUp { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:translateY(0); } }
         .fade-up { animation: fadeUp 0.55s ease both; }
-=======
-    <meta name="description" content="Lihat semua menu lezat Monika's Kitchen — makanan, minuman, snack, dan pasta pilihan terbaik.">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    @vite('resources/css/app.css')
-    <style>
-        * { font-family: 'Plus Jakarta Sans', sans-serif; }
-
-        .no-scrollbar::-webkit-scrollbar { display: none; }
-        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-
-        /* Menu card */
-        .menu-card { transition: transform 0.25s ease, box-shadow 0.25s ease, opacity 0.3s ease; }
-        .menu-card:hover { transform: translateY(-4px); box-shadow: 0 16px 32px rgba(249,115,22,0.15); }
-
-        /* Add button */
-        .add-btn { transition: background 0.2s, transform 0.2s; }
-        .add-btn:hover { transform: scale(1.12); }
-
-        /* Category pill active */
-        .cat-pill { transition: all 0.2s ease; }
-        .cat-pill.active { background: #ea580c; color: #fff; box-shadow: 0 4px 14px rgba(234,88,12,0.35); }
-
-        /* Filter hidden */
-        .menu-card.hidden-item { display: none; }
-
-        /* Section fade-in */
-        @keyframes fadeUp { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:translateY(0); } }
-        .fade-up { animation: fadeUp 0.55s ease both; }
-
-        /* Badge pulse */
-        @keyframes pulse-badge { 0%,100% { transform:scale(1); } 50% { transform:scale(1.18); } }
-        .badge-pulse { animation: pulse-badge 2s infinite; }
-
-        /* Cart count scale */
->>>>>>> 74acaec9651d928d6d75935fedd887b7404207ff
         .scale-pop { animation: scalePop 0.2s ease; }
         @keyframes scalePop { 0% { transform:scale(1); } 50% { transform:scale(1.4); } 100% { transform:scale(1); } }
     </style>
@@ -81,8 +42,10 @@
             </div>
         </section>
 
+        {{-- Poin section removed — hidden from customer --}}
+
         {{-- ===== FILTER: DROPDOWN KATEGORI ===== --}}
-        <section class="px-4 mt-5 fade-up">
+        <section class="px-4 mt-4 fade-up">
             <div class="flex gap-3 items-center">
                 <select id="cat-dropdown" class="px-4 py-2.5 rounded-xl border border-slate-200 bg-white text-sm font-bold text-slate-700 focus:ring-2 focus:ring-orange-500 focus:border-transparent outline-none shadow-sm appearance-none pr-10"
                         style="background-image: url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2220%22 height=%2220%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%2394a3b8%22 stroke-width=%222%22><path d=%22M6 9l6 6 6-6%22/></svg>'); background-repeat: no-repeat; background-position: right 8px center;">
@@ -105,9 +68,10 @@
                         ? asset('storage/' . $menu->gambar)
                         : 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=400&q=80';
                     $kategoriNama = $menu->kategori ? $menu->kategori->nama : 'Menu';
-                    $habis = ($menu->sisa_kuota !== null && $menu->sisa_kuota <= 0);
+                    $hasPromo = !empty($menu->harga_promo);
+                    $displayPrice = $hasPromo ? $menu->harga_promo : $menu->harga;
                 @endphp
-                <div class="menu-card bg-white rounded-2xl p-2.5 shadow-sm border border-slate-100 group cursor-pointer {{ $habis ? 'opacity-50 pointer-events-none' : '' }}"
+                <div class="menu-card bg-white rounded-2xl p-2.5 shadow-sm border border-slate-100 group cursor-pointer"
                      data-category="{{ $kategoriNama }}" data-name="{{ $menu->nama }}">
 
                     {{-- Image --}}
@@ -120,14 +84,17 @@
                             {{ $kategoriNama }}
                         </span>
 
-                        {{-- Kuota / Habis badge --}}
-                        @if($habis)
-                        <div class="absolute inset-0 bg-black/40 flex items-center justify-center">
-                            <span class="bg-red-600 text-white text-xs font-black px-3 py-1 rounded-full">HABIS HARI INI</span>
-                        </div>
-                        @elseif($menu->sisa_kuota !== null)
-                        <span class="absolute bottom-2 left-2 bg-emerald-500/90 text-white text-[9px] font-bold px-1.5 py-0.5 rounded-full">
-                            Sisa {{ $menu->sisa_kuota }}
+                        {{-- Promo badge --}}
+                        @if($hasPromo)
+                        <span class="absolute top-2 left-2 bg-red-500 text-white text-[9px] font-black px-2 py-0.5 rounded-lg shadow-sm animate-pulse">
+                            🏷️ PROMO
+                        </span>
+                        @endif
+
+                        {{-- Pre-order badge --}}
+                        @if($menu->preorder_hari > 0)
+                        <span class="absolute bottom-2 left-2 bg-blue-500/90 text-white text-[9px] font-bold px-1.5 py-0.5 rounded-full">
+                            🕐 PO {{ $menu->preorder_hari }} hari
                         </span>
                         @endif
 
@@ -149,21 +116,27 @@
 
                     {{-- Price + Add --}}
                     <div class="flex justify-between items-center mt-2 px-0.5">
-                        <p class="text-orange-600 font-black text-sm">Rp {{ number_format($menu->harga, 0, ',', '.') }}</p>
-                        @if(!$habis)
+                        <div>
+                            @if($hasPromo)
+                            <p class="text-slate-400 text-[10px] line-through">Rp {{ number_format($menu->harga, 0, ',', '.') }}</p>
+                            <p class="text-red-600 font-black text-sm">Rp {{ number_format($menu->harga_promo, 0, ',', '.') }}</p>
+                            @else
+                            <p class="text-orange-600 font-black text-sm">Rp {{ number_format($menu->harga, 0, ',', '.') }}</p>
+                            @endif
+                        </div>
                         <button class="add-btn bg-slate-900 hover:bg-orange-600 p-2 rounded-xl text-white shadow-md"
                                 data-item-id="{{ $menu->id }}"
                                 data-item-name="{{ $menu->nama }}"
-                                data-item-price="{{ $menu->harga }}"
+                                data-item-price="{{ $displayPrice }}"
                                 data-item-img="{{ $imgUrl }}"
                                 data-item-cat="{{ $kategoriNama }}"
-                                data-item-kuota="{{ $menu->sisa_kuota ?? '' }}"
-                                data-item-catering="{{ $menu->catering_tersedia ? '1' : '0' }}">
+                                data-item-poin="{{ $menu->poin ?? 0 }}"
+                                data-item-catering="{{ $menu->catering_tersedia ? '1' : '0' }}"
+                                data-item-preorder="{{ $menu->preorder_hari ?? 0 }}">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
                             </svg>
                         </button>
-                        @endif
                     </div>
                 </div>
                 @endforeach
@@ -183,22 +156,26 @@
 {{-- ===== JAVASCRIPT ===== --}}
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-    // ---- Filter ----
     const dropdown    = document.getElementById('cat-dropdown');
     const searchInput = document.getElementById('search-input');
     const cards       = document.querySelectorAll('.menu-card');
     const emptyEl     = document.getElementById('empty-state');
 
-    // URL search param
     const urlParams   = new URLSearchParams(window.location.search);
     const searchQuery = urlParams.get('search') || '';
+    const catQuery    = urlParams.get('cat') || '';
     if (searchQuery) searchInput.value = searchQuery;
+    if (catQuery) {
+        // Set dropdown to matching category
+        for (let opt of dropdown.options) {
+            if (opt.value === catQuery) { dropdown.value = catQuery; break; }
+        }
+    }
 
     function filterCards() {
         const cat = dropdown.value;
         const q = searchInput.value.toLowerCase();
         let visible = 0;
-
         cards.forEach(card => {
             const catMatch = cat === 'Semua' || card.dataset.category === cat;
             const nameMatch = !q || card.dataset.name.toLowerCase().includes(q);
@@ -206,13 +183,12 @@ document.addEventListener('DOMContentLoaded', function () {
             card.style.display = show ? '' : 'none';
             if (show) visible++;
         });
-
         emptyEl.classList.toggle('hidden', visible > 0);
     }
 
     dropdown.addEventListener('change', filterCards);
     searchInput.addEventListener('input', filterCards);
-    if (searchQuery) filterCards();
+    if (searchQuery || catQuery) filterCards();
 
     // ---- Cart (localStorage) ----
     function getCart() {
@@ -235,25 +211,16 @@ document.addEventListener('DOMContentLoaded', function () {
         const price = btn.dataset.itemPrice;
         const img = btn.dataset.itemImg;
         const cat = btn.dataset.itemCat;
-        const kuota = btn.dataset.itemKuota;
+        const poin = btn.dataset.itemPoin;
         const catering = btn.dataset.itemCatering;
+        const preorder = parseInt(btn.dataset.itemPreorder) || 0;
 
         let cart = getCart();
         const existing = cart.find(i => i.id == id);
-
-        // Cek kuota client-side
-        if (kuota && existing) {
-            const currentQty = existing.qty + 1;
-            if (currentQty > parseInt(kuota)) {
-                showToast('Kuota habis! Hanya sisa ' + kuota + ' porsi hari ini.');
-                return;
-            }
-        }
-
         if (existing) {
             existing.qty++;
         } else {
-            cart.push({ id, name, price, img, cat, catering, qty: 1 });
+            cart.push({ id, name, price, img, cat, poin, catering, preorder, qty: 1 });
         }
         saveCart(cart);
         updateCartBadge();

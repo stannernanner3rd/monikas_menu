@@ -11,7 +11,7 @@ class Kategori extends Model
 
     // Beri tahu Laravel nama tabelnya yang benar
     protected $table = 'kategori';
-
+    
     protected $guarded = [];
 
     // Relasi: satu kategori punya banyak menu

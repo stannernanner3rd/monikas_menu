@@ -2,7 +2,7 @@
     $currentPath = request()->path();
 
     $navItems = [
-        ['path' => 'main',     'url' => '/main',     'label' => 'Beranda'],
+        ['path' => '/',     'url' => '/',     'label' => 'Beranda'],
         ['path' => 'menu',     'url' => '/menu',     'label' => 'Menu'],
         ['path' => 'orders',   'url' => '/orders',   'label' => 'Pesanan'],
         ['path' => 'about',    'url' => '/about',    'label' => 'Tentang'],
@@ -10,7 +10,7 @@
     ];
 
     $navIcons = [
-        'main'   => ['outline' => 'M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6',
+        '/'   => ['outline' => 'M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6',
                       'solid'  => 'M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z'],
         'menu'   => ['outline' => 'M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253',
                       'solid'  => 'M9 4.804A7.968 7.968 0 005.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 015.5 14c1.669 0 3.218.51 4.5 1.385A7.962 7.962 0 0114.5 14c1.255 0 2.443.29 3.5.804v-10A7.968 7.968 0 0014.5 4c-1.255 0-2.443.29-3.5.804V12a1 1 0 11-2 0V4.804z'],
@@ -30,7 +30,7 @@
 
     {{-- Brand --}}
     <div class="px-6 py-5 border-b border-slate-100">
-        <a href="{{ url('/main') }}" class="block">
+        <a href="{{ url('/') }}" class="block">
             <span class="text-xl font-black text-slate-900 tracking-tighter leading-none">
                 MONIKA<span class="text-orange-600">KITCHEN.</span>
             </span>
@@ -80,12 +80,17 @@
 
     {{-- Sidebar Footer --}}
     <div class="px-4 py-4 border-t border-slate-100 space-y-3">
-        <a href="{{ url('/menu') }}"
-           class="flex items-center justify-center gap-2 w-full bg-orange-500 hover:bg-orange-600 text-white font-bold text-sm px-4 py-2.5 rounded-xl shadow transition-all duration-200">
+        <a href="{{ url('/orders') }}"
+           class="flex items-center justify-center gap-2 w-full bg-slate-900 hover:bg-slate-800 text-white font-bold text-sm px-4 py-2.5 rounded-xl shadow transition-all duration-200 relative">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
             </svg>
-            Pesan Sekarang
+            Keranjang
+            <span class="cart-badge" style="display:none"><span class="cart-badge-count bg-orange-500 text-white text-[10px] font-black w-5 h-5 rounded-full flex items-center justify-center absolute -top-1 -right-1">0</span></span>
+        </a>
+        <a href="{{ url('/menu') }}"
+           class="flex items-center justify-center gap-2 w-full bg-orange-500 hover:bg-orange-600 text-white font-bold text-sm px-4 py-2.5 rounded-xl shadow transition-all duration-200">
+            🍽️ Pesan Sekarang
         </a>
         <div class="bg-slate-50 rounded-xl px-3 py-2.5">
             <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wide mb-1">Jam Buka</p>
@@ -100,7 +105,7 @@
 {{-- ============================================================ --}}
 <header class="md:hidden bg-white px-4 pt-4 pb-3 shadow-sm sticky top-0 z-50">
     <div class="flex items-center gap-2.5">
-        <a href="{{ url('/main') }}" class="text-slate-900 text-xl font-black tracking-tighter flex-shrink-0 leading-none">
+        <a href="{{ url('/') }}" class="text-slate-900 text-xl font-black tracking-tighter flex-shrink-0 leading-none">
             MONIKA<span class="text-orange-600">KITCHEN.</span>
         </a>
 
@@ -123,6 +128,7 @@
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
             </svg>
+            <span class="cart-badge" style="display:none"><span class="cart-badge-count absolute -top-1 -right-1 bg-orange-500 text-white text-[10px] font-black w-5 h-5 rounded-full flex items-center justify-center">0</span></span>
         </a>
     </div>
 </header>
@@ -159,67 +165,54 @@
 {{-- ============================================================ --}}
 <script>
 (function() {
-    // ---- Hardcoded menu database (akan diganti dari DB nanti) ----
-    const menuDatabase = [
-        { name: 'Pizza Margherita',    cat: 'Pizza',     price: 'Rp 65.000', img: 'https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?auto=format&fit=crop&w=100&q=80' },
-        { name: 'Pizza Meat Lovers',   cat: 'Pizza',     price: 'Rp 85.000', img: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=100&q=80' },
-        { name: 'Beef & Pineapple Pizza', cat: 'Pizza',  price: 'Rp 71.000', img: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=100&q=80' },
-        { name: 'Nasi Ayam Bakar',     cat: 'Nasi Ayam', price: 'Rp 35.000', img: 'https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?auto=format&fit=crop&w=100&q=80' },
-        { name: 'Nasi Ayam Geprek',    cat: 'Nasi Ayam', price: 'Rp 28.000', img: 'https://images.unsplash.com/photo-1632778149955-e80f8ceca2e8?auto=format&fit=crop&w=100&q=80' },
-        { name: 'Spicy Honey Chicken', cat: 'Ayam',      price: 'Rp 45.000', img: 'https://images.unsplash.com/photo-1567620832903-9fc6debc209f?auto=format&fit=crop&w=100&q=80' },
-        { name: 'Spaghetti Carbonara', cat: 'Pasta',     price: 'Rp 45.000', img: 'https://images.unsplash.com/photo-1612450800052-759c5509b58e?auto=format&fit=crop&w=100&q=80' },
-        { name: 'Creamy Mushroom Pasta', cat: 'Pasta',   price: 'Rp 55.000', img: 'https://images.unsplash.com/photo-1556761223-4c4282c73f77?auto=format&fit=crop&w=100&q=80' },
-        { name: 'Double Cheeseburger', cat: 'Burger',    price: 'Rp 60.000', img: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=100&q=80' },
-        { name: 'Grilled Salmon Steak', cat: 'Seafood',  price: 'Rp 95.000', img: 'https://images.unsplash.com/photo-1467003909585-2f8a7270028d?auto=format&fit=crop&w=100&q=80' },
-        { name: 'Es Teh Manis',        cat: 'Minuman',   price: 'Rp 5.000',  img: 'https://images.unsplash.com/photo-1556679343-c7306c1976bc?auto=format&fit=crop&w=100&q=80' },
-        { name: 'Es Timun Selasih',    cat: 'Minuman',   price: 'Rp 13.000', img: 'https://images.unsplash.com/photo-1626078299046-9fbeade2891e?auto=format&fit=crop&w=100&q=80' },
-        { name: 'Ice Matcha Latte',    cat: 'Minuman',   price: 'Rp 25.000', img: 'https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=100&q=80' },
-        { name: 'Jus Alpukat Susu',    cat: 'Minuman',   price: 'Rp 18.000', img: 'https://images.unsplash.com/photo-1623065422902-30a2d299bbe4?auto=format&fit=crop&w=100&q=80' },
-        { name: 'French Fries',        cat: 'Snack',     price: 'Rp 15.000', img: 'https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=100&q=80' },
-        { name: 'Sate Ayam Bumbu',     cat: 'Makanan',   price: 'Rp 35.000', img: 'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=100&q=80' },
-        { name: 'Mie Goreng Spesial',  cat: 'Makanan',   price: 'Rp 22.000', img: 'https://images.unsplash.com/photo-1569050467447-ce54b3bbc37d?auto=format&fit=crop&w=100&q=80' },
-    ];
+    const BASE = '{{ url("/") }}';
+    const STORAGE = '{{ asset("storage") }}';
+
+    function formatRupiah(n) {
+        return 'Rp ' + Number(n).toLocaleString('id-ID');
+    }
 
     function renderDropdown(results, query) {
-        if (!query || results.length === 0) {
-            if (!query) return '';
+        if (!query) return '';
+        if (results.length === 0) {
             return '<div class="p-4 text-center text-slate-400 text-sm">Tidak ditemukan menu untuk "<span class="font-bold text-slate-500">' + query + '</span>"</div>';
         }
 
+        const escapedQ = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        const re = new RegExp('(' + escapedQ + ')', 'gi');
+
         let html = '<div class="py-1">';
         results.forEach(item => {
-            const highlighted = item.name.replace(
-                new RegExp('(' + query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'gi'),
-                '<span class="text-orange-600 font-extrabold">$1</span>'
-            );
+            const highlighted = item.nama.replace(re, '<span class="text-orange-600 font-extrabold">$1</span>');
+            const imgSrc = item.gambar
+                ? `${STORAGE}/${item.gambar}`
+                : 'https://placehold.co/80x80/f1f5f9/94a3b8?text=No+Img';
+
+            let priceHtml = '';
+            if (item.harga_promo) {
+                priceHtml = `<span class="line-through text-slate-300 mr-1">${formatRupiah(item.harga)}</span><span class="text-red-500 font-bold">${formatRupiah(item.harga_promo)}</span>`;
+            } else {
+                priceHtml = formatRupiah(item.harga);
+            }
+
             html += `
-                <a href="/menu?search=${encodeURIComponent(item.name)}"
+                <a href="${BASE}/menu?search=${encodeURIComponent(item.nama)}"
                    class="flex items-center gap-3 px-4 py-2.5 hover:bg-orange-50 transition cursor-pointer">
-                    <img src="${item.img}" alt="${item.name}" class="w-10 h-10 rounded-lg object-cover flex-shrink-0">
+                    <img src="${imgSrc}" alt="${item.nama}" class="w-10 h-10 rounded-lg object-cover flex-shrink-0 border border-slate-100">
                     <div class="flex-1 min-w-0">
                         <p class="text-sm font-bold text-slate-800 truncate">${highlighted}</p>
-                        <p class="text-xs text-slate-400">${item.cat} · ${item.price}</p>
+                        <p class="text-xs text-slate-400">${item.kategori} · ${priceHtml}</p>
                     </div>
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-slate-300 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
                 </a>`;
         });
         html += '</div>';
 
-        if (results.length > 0) {
-            html += `<a href="/menu?search=${encodeURIComponent(query)}"
-                        class="block text-center text-xs font-bold text-orange-600 hover:text-orange-700 py-2.5 border-t border-slate-100 transition">
-                        Lihat semua hasil untuk "${query}" →
-                     </a>`;
-        }
+        html += `<a href="${BASE}/menu?search=${encodeURIComponent(query)}"
+                    class="block text-center text-xs font-bold text-orange-600 hover:text-orange-700 py-2.5 border-t border-slate-100 transition">
+                    Lihat semua hasil untuk "${query}" →
+                 </a>`;
         return html;
-    }
-
-    function searchMenu(query) {
-        if (!query || query.length < 1) return [];
-        const q = query.toLowerCase();
-        return menuDatabase.filter(item =>
-            item.name.toLowerCase().includes(q) || item.cat.toLowerCase().includes(q)
-        ).slice(0, 6);
     }
 
     function setupSearch(inputId, dropdownId) {
@@ -228,27 +221,43 @@
         if (!input || !dropdown) return;
 
         let debounceTimer;
+        let abortController;
 
         input.addEventListener('input', function() {
             clearTimeout(debounceTimer);
+            const query = this.value.trim();
+
+            if (query.length === 0) {
+                dropdown.classList.add('hidden');
+                return;
+            }
+
             debounceTimer = setTimeout(() => {
-                const query = this.value.trim();
-                if (query.length === 0) {
-                    dropdown.classList.add('hidden');
-                    return;
-                }
-                const results = searchMenu(query);
-                dropdown.innerHTML = renderDropdown(results, query);
+                if (abortController) abortController.abort();
+                abortController = new AbortController();
+
+                // Show loading
+                dropdown.innerHTML = '<div class="p-4 text-center text-slate-400 text-sm"><svg class="animate-spin h-5 w-5 mx-auto text-orange-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path></svg></div>';
                 dropdown.classList.remove('hidden');
-            }, 150);
+
+                fetch(`${BASE}/api/search-menu?q=${encodeURIComponent(query)}`, { signal: abortController.signal })
+                    .then(r => r.json())
+                    .then(data => {
+                        dropdown.innerHTML = renderDropdown(data, query);
+                        dropdown.classList.remove('hidden');
+                    })
+                    .catch(err => {
+                        if (err.name !== 'AbortError') {
+                            dropdown.innerHTML = '<div class="p-4 text-center text-red-400 text-sm">Gagal memuat hasil</div>';
+                        }
+                    });
+            }, 250);
         });
 
         input.addEventListener('focus', function() {
             const query = this.value.trim();
             if (query.length > 0) {
-                const results = searchMenu(query);
-                dropdown.innerHTML = renderDropdown(results, query);
-                dropdown.classList.remove('hidden');
+                input.dispatchEvent(new Event('input'));
             }
         });
 
@@ -261,7 +270,7 @@
         input.addEventListener('keydown', function(e) {
             if (e.key === 'Enter') {
                 const query = this.value.trim();
-                if (query) window.location.href = '/menu?search=' + encodeURIComponent(query);
+                if (query) window.location.href = BASE + '/menu?search=' + encodeURIComponent(query);
             }
             if (e.key === 'Escape') dropdown.classList.add('hidden');
         });
@@ -270,6 +279,16 @@
     document.addEventListener('DOMContentLoaded', function() {
         setupSearch('desktop-search', 'desktop-search-dropdown');
         setupSearch('mobile-search', 'mobile-search-dropdown');
+
+        // Cart badge update
+        try {
+            const cart = JSON.parse(localStorage.getItem('mk-cart')) || [];
+            const total = cart.reduce((s, i) => s + i.qty, 0);
+            document.querySelectorAll('.cart-badge-count').forEach(el => {
+                el.textContent = total;
+                el.parentElement.style.display = total > 0 ? '' : 'none';
+            });
+        } catch(e) {}
     });
 })();
 </script>
